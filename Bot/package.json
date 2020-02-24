@@ -4,7 +4,8 @@
   "description": "",
   "main": "app,.js",
   "dependencies": {
-    "node-telegram-bot-api": "^0.40.0"
+    "node-telegram-bot-api": "^0.40.0",
+    "telegraf": "^3.36.0"
   },
   "devDependencies": {
     "husky": "^3.0.9",
