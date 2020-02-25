@@ -8,4 +8,5 @@ function to_system(number, system) {
 	}
 	return result;
 }
+
 module.exports = { to_system };
