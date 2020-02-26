@@ -7,61 +7,47 @@ const token = '1057493772:AAHwk6iDOUL6CFnUPFFcNAFVT6fWgaDcwYY';
 
 const bot = new TelegramBot(token, { polling: true });
 
-bot.onText(/\/number/, (msg, match) => {
-	const chatId = msg.chat.id;
-	const resp = match[1];
-
-	bot.sendMessage(chatId, 'Choose your number system', {
+bot.onText(/\/start/, (msg) => {
+	const id = msg.chat.id;
+	bot.sendMessage(id, 'Choose your number system', {
 		reply_markup: {
-			inline_keyboard: [
-				[
-					{
-						text: '2',
-						callback_data: '2'
-					},
-					{
-						text: '3',
-						callback_data: '3'
-					},
-					{
-						text: '8',
-						callback_data: '8'
-					},
-					{
-						text: '10',
-						callback_data: '10'
-					}
-				]
-			]
+			keyboard: [ [ '2', '3' ], [ '8', '10' ], [ 'Close' ] ]
 		}
 	});
-});
-bot.on('callback_query', (query) => {
-	console.log(query);
+
 	bot.on('message', (msg) => {
-		const id = msg.chat.id;
 		const data = msg.text;
-		const dataInNumber = parseInt(data, 10);
-		console.log(msg);
-		if (dataInNumber == NaN) {
-			console.error('Error');
-			bot.sendMessage(id, 'Error, try again');
+
+		if (data === 'Close') {
+			bot.sendMessage(id, 'Closing keyboard', {
+				reply_markup: {
+					remove_keyboard: true
+				}
+			});
+		} else if (data === '2') {
+			bot.sendMessage(id, 'Send me your number.', {
+				reply_markup: {
+					remove_keyboard: true
+				}
+			});
+		} else {
+			bot.sendMessage(id, 'Choose your number system', {
+				reply_markup: {
+					keyboard: [ [ '2', '3' ], [ '8', '10' ], [ 'Close' ] ]
+				}
+			});
 		}
-		console.log(typeof data, typeof dataInNumber);
-		bot.sendMessage(id, dataInNumber.toString(2)).catch((error) => {
-			console.log(error.code);
-		});
+		// const numberSystemOnButton = parseInt(msg.text, 10);
+		// console.log(numberSystemOnButton);
+		// if (dataInNumSystem === 'NaN') {
+		// 	console.error('Error');
+		// 	bot.sendMessage(id, 'Error, try again');
+		// } else if (dataInNumber < 2 && dataInNumber > 16) {
+		// 	bot.sendMessage(id, 'Please, choose number system only from 2 to 16! Try again.');
+		// } else {
+		// 	bot.sendMessage(id, dataInNumber.toString(numberSystemOnButton));
+		// }
+
 		// bot.on('polling_error', (err) => console.log(err));
 	});
 });
-
-//-------------------------------------------------------------------
-// // Listen for any kind of message. There are different kinds of
-// // messages.
-// bot.on('message', (msg) => {
-// 	const chatId = msg.chat.id;
-
-// 	// send a message to the chat acknowledging receipt of their message
-// 	bot.sendMessage(chatId, 'Received your message');
-// });
-//-------------------------------------------------------------------
