@@ -6,48 +6,45 @@ const TelegramBot = require('node-telegram-bot-api');
 const token = '1057493772:AAHwk6iDOUL6CFnUPFFcNAFVT6fWgaDcwYY';
 
 const bot = new TelegramBot(token, { polling: true });
+// bot.onText('/start/', (msg) => {
+// 	bot.sendMessage(msg.chat.id, 'Send me number you want to convert.');
+// });
+let number;
 
-bot.onText(/\/start/, (msg) => {
+bot.on('message', (msg) => {
+	number = parseInt(msg.text, 10);
 	const id = msg.chat.id;
 	bot.sendMessage(id, 'Choose your number system', {
 		reply_markup: {
-			keyboard: [ [ '2', '3' ], [ '8', '10' ], [ 'Close' ] ]
+			inline_keyboard: [
+				[ { text: '2', callback_data: 2 }, { text: '3', callback_data: 3 }, { text: '8', callback_data: 8 } ]
+			]
 		}
 	});
+});
 
-	bot.on('message', (msg) => {
-		const data = msg.text;
-
-		if (data === 'Close') {
-			bot.sendMessage(id, 'Closing keyboard', {
-				reply_markup: {
-					remove_keyboard: true
-				}
-			});
-		} else if (data === '2') {
-			bot.sendMessage(id, 'Send me your number.', {
-				reply_markup: {
-					remove_keyboard: true
-				}
-			});
-		} else {
-			bot.sendMessage(id, 'Choose your number system', {
-				reply_markup: {
-					keyboard: [ [ '2', '3' ], [ '8', '10' ], [ 'Close' ] ]
-				}
-			});
+bot.on('callback_query', (query) => {
+	const chatId = query.message.chat.id;
+	const numSystem = parseInt(query.data, 10);
+	if (number > 10000000) {
+		bot.sendMessage(chatId);
+	} else {
+		try {
+			switch (query.data) {
+				case '2':
+					bot.sendMessage(chatId, to_system(number, numSystem));
+					break;
+				case '3':
+					bot.sendMessage(chatId, to_system(number, numSystem));
+					break;
+				case '8':
+					bot.sendMessage(chatId, to_system(number, numSystem));
+					break;
+				default:
+					break;
+			}
+		} catch (err) {
+			console.log(err);
 		}
-		// const numberSystemOnButton = parseInt(msg.text, 10);
-		// console.log(numberSystemOnButton);
-		// if (dataInNumSystem === 'NaN') {
-		// 	console.error('Error');
-		// 	bot.sendMessage(id, 'Error, try again');
-		// } else if (dataInNumber < 2 && dataInNumber > 16) {
-		// 	bot.sendMessage(id, 'Please, choose number system only from 2 to 16! Try again.');
-		// } else {
-		// 	bot.sendMessage(id, dataInNumber.toString(numberSystemOnButton));
-		// }
-
-		// bot.on('polling_error', (err) => console.log(err));
-	});
+	}
 });
