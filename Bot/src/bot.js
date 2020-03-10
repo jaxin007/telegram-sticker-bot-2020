@@ -2,30 +2,33 @@ process.env.NTBA_FIX_319 = 1;
 // const fsp = require('fs').promises;
 const { imager } = require('./sharp');
 const TelegramBot = require('node-telegram-bot-api');
-const { axiosClient } = require('./clientAxios');
+const axios = require('axios');
 // replace the value below with the Telegram token you receive from @BotFather
 const token = '1057493772:AAHwk6iDOUL6CFnUPFFcNAFVT6fWgaDcwYY';
 
 const bot = new TelegramBot(token, { polling: true });
 
 bot.on('photo', async (message) => {
-  bot.on('polling_error', (err) => {
-    console.log(err);
-  });
-  const id = message.chat.id;
-  const fileId = message.photo[0].file_id;
+	bot.on('polling_error', (err) => {
+		console.log(err);
+	});
+	const id = message.chat.id;
+	const fileId = message.photo[1].file_id;
 
-  const file = await bot.getFile(fileId).catch(() => {
-    throw new Error(`error with getFile function!`);
-  });
+	const file = await bot.getFile(fileId).catch(() => {
+		throw new Error(`error with getFile function!`);
+	});
 
-  const url = `https://api.telegram.org/file/bot${token}/${file.file_path}`;
+	const url = `https://api.telegram.org/file/bot${token}/${file.file_path}`;
 
-  const image = axiosClient(1000, url);
+	const response = await axios.get(url);
+	const imageBuffer = Buffer.from(response.data, 'utf-8');
 
-  bot.sendPhoto(id, image).catch((err) => {
-    throw new Error(`Error with sendPhoto function!`, err);
-  });
+	await imager(imageBuffer);
+
+	// bot.sendPhoto(id, file.file_id).catch((err) => {
+	// 	throw new Error(`Error with sendPhoto function!`, err);
+	// });
 });
 
 //--------------------------------------
