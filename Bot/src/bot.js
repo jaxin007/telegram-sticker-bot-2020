@@ -2,7 +2,6 @@ process.env.NTBA_FIX_319 = 1;
 // const fsp = require('fs').promises;
 const { imager } = require('./sharp');
 const TelegramBot = require('node-telegram-bot-api');
-const axios = require('axios');
 // replace the value below with the Telegram token you receive from @BotFather
 const token = '1057493772:AAHwk6iDOUL6CFnUPFFcNAFVT6fWgaDcwYY';
 
@@ -21,14 +20,11 @@ bot.on('photo', async (message) => {
 
 	const url = `https://api.telegram.org/file/bot${token}/${file.file_path}`;
 
-	const response = await axios.get(url);
-	const imageBuffer = Buffer.from(response.data, 'utf-8');
+	const image = await imager(url);
 
-	await imager(imageBuffer);
-
-	// bot.sendPhoto(id, file.file_id).catch((err) => {
-	// 	throw new Error(`Error with sendPhoto function!`, err);
-	// });
+	bot.sendDocument(id, image).catch((err) => {
+		throw new Error(`Error with sendPhoto function!`, err);
+	});
 });
 
 //--------------------------------------
