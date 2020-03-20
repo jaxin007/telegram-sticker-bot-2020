@@ -1,17 +1,24 @@
 process.env.NTBA_FIX_319 = 1;
+process.env['NTBA_FIX_350'] = 1;
 // const fsp = require('fs').promises;
 const { imager } = require('./sharp');
 const TelegramBot = require('node-telegram-bot-api');
+const fs = require('fs');
 // replace the value below with the Telegram token you receive from @BotFather
-const token = '1057493772:AAHwk6iDOUL6CFnUPFFcNAFVT6fWgaDcwYY';
+const token = '1127840537:AAHhCP4Rz1W0O4J65Qo3zbvH7HnbPURTK_4';
 
 const bot = new TelegramBot(token, { polling: true });
+bot.onText(/\/start/, (msg) => {
+	const id = msg.chat.id;
+	bot.sendMessage(id, 'Hello! Im a sticker bot! Just send me picture you want to convert into a sticker.');
+});
 
 bot.on('photo', async (message) => {
 	bot.on('polling_error', (err) => {
 		console.log(err);
 	});
 	const id = message.chat.id;
+
 	const fileId = message.photo[1].file_id;
 
 	const file = await bot.getFile(fileId).catch(() => {
@@ -22,48 +29,16 @@ bot.on('photo', async (message) => {
 
 	const image = await imager(url);
 
-	bot.sendDocument(id, image).catch((err) => {
-		throw new Error(`Error with sendPhoto function!`, err);
-	});
+	const fileOptions = {
+		// Explicitly specify the file name.
+		filename: 'sticker.png',
+		// Explicitly specify the MIME type.
+		contentType: 'image/png'
+	};
+
+	try {
+		await bot.sendDocument(id, image, { caption: 'Your sticker' }, fileOptions);
+	} catch (err) {
+		throw new Error(err);
+	}
 });
-
-//--------------------------------------
-// let number;
-
-// bot.on('message', (msg) => {
-// 	number = parseInt(msg.text, 10);
-// 	const id = msg.chat.id;
-// 	bot.sendMessage(id, 'Choose your number system', {
-// 		reply_markup: {
-// 			inline_keyboard: [
-// 				[ { text: '2', callback_data: 2 }, { text: '3', callback_data: 3 }, { text: '8', callback_data: 8 } ]
-// 			]
-// 		}
-// 	});
-// });
-
-// bot.on('callback_query', (query) => {
-// 	const chatId = query.message.chat.id;
-// 	const numSystem = parseInt(query.data, 10);
-// 	if (number > 10000000) {
-// 		bot.sendMessage(chatId);
-// 	} else {
-// 		try {
-// 			switch (query.data) {
-// 				case '2':
-// 					bot.sendMessage(chatId, to_system(number, numSystem));
-// 					break;
-// 				case '3':
-// 					bot.sendMessage(chatId, to_system(number, numSystem));
-// 					break;
-// 				case '8':
-// 					bot.sendMessage(chatId, to_system(number, numSystem));
-// 					break;
-// 				default:
-// 					break;
-// 			}
-// 		} catch (err) {
-// 			console.log(err);
-// 		}
-// 	}
-// })
