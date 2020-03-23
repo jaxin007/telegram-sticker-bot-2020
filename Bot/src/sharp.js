@@ -1,7 +1,7 @@
 const sharp = require('sharp');
 const axios = require('axios');
 
-async function imager(URL, WIDTH, HEIGHT) {
+async function imageToSticker(URL, WIDTH, HEIGHT) {
 	const input = (await axios({ url: URL, responseType: 'arraybuffer' })).data;
 
 	const output = await sharp(input)
@@ -17,4 +17,4 @@ async function imager(URL, WIDTH, HEIGHT) {
 	return imageBuffer;
 }
 
-module.exports = { imager };
+module.exports = { imageToSticker };
