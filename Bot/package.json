@@ -25,7 +25,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint ./src/**.js --fix",
-    "start": "node ./src/app.js"
+    "start": "node ./src/bot.js"
   },
   "husky": {
     "hooks": {
