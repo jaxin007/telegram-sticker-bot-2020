@@ -1,10 +1,14 @@
-var https = require('https');
-function wakeUpDyno() {
-  setInterval(() => {
-    https.get('https://intense-crag-83953.herokuapp.com');
-  }, 1200000);
+var express = require('express');
+var app = express();
+
+function wakeUpDyno(PORT) {
+	console.log('START!');
+	app
+		.get('/', (req, res) => {
+			return res.send('Hello');
+		})
+		.listen(PORT);
 }
 
-module.exports = {
-  wakeUpDyno,
-};
+wakeUpDyno(3030);
+module.exports = { wakeUpDyno };
