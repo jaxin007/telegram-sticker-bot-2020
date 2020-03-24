@@ -1,10 +1,10 @@
-const wakeUpTimer = (TIME) => {
-	setInterval(() => {
-		const date = Date().toString();
-		console.log(`WAKE UP DYNO\n${date}`);
-	}, TIME);
-};
+var https = require('https');
+function wakeUpDyno() {
+  setInterval(() => {
+    https.get('https://intense-crag-83953.herokuapp.com');
+  }, 1200000);
+}
 
 module.exports = {
-	wakeUpTimer
+  wakeUpDyno,
 };
