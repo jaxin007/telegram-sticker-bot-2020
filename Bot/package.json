@@ -3,12 +3,12 @@
   "version": "",
   "description": "",
   "main": "app,.js",
+  "type": "module",
   "dependencies": {
     "axios": "^0.19.2",
     "express": "^4.17.1",
-    "https": "^1.0.0",
-    "node-telegram-bot-api": "^0.40.0",
-    "sharp": "^0.25.0"
+    "sharp": "^0.25.0",
+    "telegraf": "^3.37.0"
   },
   "engines": {
     "node": "10.16.3"

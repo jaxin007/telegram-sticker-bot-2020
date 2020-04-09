@@ -1,14 +1,10 @@
-var express = require('express');
-var app = express();
+import express from 'express';
+const app = express();
 
-function wakeUpDyno(PORT) {
-	console.log('START!');
-	app
-		.get('/', (req, res) => {
-			return res.send('Hello');
-		})
-		.listen(PORT);
+export function wakeUpDyno(PORT) {
+  app
+    .get('/', (req, res) => {
+      return res.send('Hello');
+    })
+    .listen(PORT);
 }
-
-wakeUpDyno(3030);
-module.exports = { wakeUpDyno };
