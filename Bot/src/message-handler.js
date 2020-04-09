@@ -1,7 +1,5 @@
 import { imageToSticker } from './sharp.js';
 
-// const token = process.env.TOKEN;
-
 export function startCommand(ctx) {
   ctx.reply('Hello! Im a sticker bot! Just send me picture you want to convert into a sticker.');
 }

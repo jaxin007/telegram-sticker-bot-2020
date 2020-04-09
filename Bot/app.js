@@ -2,8 +2,9 @@ import Telegraf from 'telegraf';
 import { invalidInputHandler, photoHandler, startCommand } from './src/message-handler.js';
 import { wakeUpDyno } from './src/wakeup.js';
 
-const token = '1127840537:AAHhCP4Rz1W0O4J65Qo3zbvH7HnbPURTK_4';
+const token = process.env.TOKEN;
 const port = process.env.PORT || 3030;
+
 wakeUpDyno(port);
 
 export const bot = new Telegraf(token);
