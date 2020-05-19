@@ -11,7 +11,7 @@ const bot = new Telegraf(token);
 
 bot.start(messageHandler.startCommand);
 
-bot.on('photo', messageHandler.photoHandler);
+bot.on('photo', (ctx) => messageHandler.photoHandler(ctx));
 bot.on('document', (ctx) => messageHandler.documentHandler(ctx));
 
 bot.on('text', messageHandler.invalidInputHandler);
