@@ -28,10 +28,8 @@ class MessageHandler {
     const resizedWidth = Math.floor(photoWidth * resizeRatio);
     const resizedHeight = Math.floor(photoHeight * resizeRatio);
 
-
-    const image = await this.imager.imageToJpeg(url, resizedWidth, resizedHeight);
-
     try {
+      const image = await this.imager.imageToJpeg(url, resizedWidth, resizedHeight);
       await ctx.replyWithDocument({ source: image, filename: 'sticker.png' }, { caption: 'Your sticker.' });
     } catch (err) {
       console.error(err);
