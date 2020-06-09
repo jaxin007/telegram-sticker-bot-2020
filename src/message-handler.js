@@ -25,8 +25,8 @@ class MessageHandler {
     const biggestSide = photoWidth > photoHeight ? photoWidth : photoHeight;
 
     const resizeRatio = stickerSize / biggestSide;
-    const resizedWidth = Math.floor(photoWidth * resizeRatio);
-    const resizedHeight = Math.floor(photoHeight * resizeRatio);
+    const resizedWidth = Math.round(photoWidth * resizeRatio);
+    const resizedHeight = Math.round(photoHeight * resizeRatio);
 
     try {
       const image = await this.imager.imageToJpeg(url, resizedWidth, resizedHeight);
@@ -49,8 +49,8 @@ class MessageHandler {
       const biggestSide = photoWidth > photoHeight ? photoWidth : photoHeight;
 
       const resizeRatio = stickerSize / biggestSide;
-      const resizedWidth = Math.floor(photoWidth * resizeRatio);
-      const resizedHeight = Math.floor(photoHeight * resizeRatio);
+      const resizedWidth = Math.round(photoWidth * resizeRatio);
+      const resizedHeight = Math.round(photoHeight * resizeRatio);
 
 
       const image = await this.imager.imageToPng(url, resizedWidth, resizedHeight);
