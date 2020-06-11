@@ -1,5 +1,3 @@
-// const { imager } = require('./dependencies');
-
 class MessageHandler {
   constructor(imager) {
     this.imager = imager;
@@ -30,6 +28,7 @@ class MessageHandler {
 
     try {
       const image = await this.imager.imageToJpeg(url, resizedWidth, resizedHeight);
+      await ctx.telegram.sendChatAction(ctx.update.message.chat.id, 'upload_document');
       await ctx.replyWithDocument({ source: image, filename: 'sticker.png' }, { caption: 'Your sticker.' });
     } catch (err) {
       console.error(err);
@@ -55,6 +54,7 @@ class MessageHandler {
 
       const image = await this.imager.imageToPng(url, resizedWidth, resizedHeight);
 
+      await ctx.telegram.sendChatAction(ctx.update.message.chat.id, 'upload_document');
       await ctx.replyWithDocument({
         source: image,
         filename: 'sticker.png',
