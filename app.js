@@ -14,11 +14,5 @@ bot.start(messageHandler.startCommand);
 bot.on('photo', (ctx) => messageHandler.photoHandler(ctx));
 bot.on('document', (ctx) => messageHandler.documentHandler(ctx));
 
-bot.on('text', messageHandler.invalidInputHandler);
-bot.on('audio', messageHandler.invalidInputHandler);
-bot.on('animation', messageHandler.invalidInputHandler);
-bot.on('contact', messageHandler.invalidInputHandler);
-bot.on('game', messageHandler.invalidInputHandler);
-bot.on('passport_data', messageHandler.invalidInputHandler);
-bot.on('sticker', messageHandler.invalidInputHandler);
+bot.on(['text', 'audio', 'animation', 'contact', 'game', 'passport_data', 'sticker'], messageHandler.invalidInputHandler);
 bot.launch();
