@@ -1,6 +1,7 @@
 const Telegraf = require('telegraf');
 const { messageHandler } = require('./src/dependencies');
 const { wakeUpDyno } = require('./src/wakeup');
+require('dotenv').config();
 
 const token = process.env.TOKEN;
 const port = process.env.PORT || 3030;

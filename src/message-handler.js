@@ -60,7 +60,7 @@ class MessageHandler {
         filename: 'sticker.png',
       }, { caption: 'Your sticker.' });
     } catch (err) {
-      ctx.reply('Error');
+      ctx.reply(err.description);
       console.error(err);
     }
   }

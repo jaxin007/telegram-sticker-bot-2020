@@ -14,6 +14,7 @@ module.exports = {
   },
   rules: {
     "indent": ["error", 2],
+    'linebreak-style': 'off',
     "no-unused-vars": "off",
     'camelcase': 'off',
     'class-methods-use-this': 'off',
