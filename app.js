@@ -16,4 +16,5 @@ bot.on('photo', (ctx) => messageHandler.photoHandler(ctx));
 bot.on('document', (ctx) => messageHandler.documentHandler(ctx));
 
 bot.on(['text', 'audio', 'animation', 'contact', 'game', 'passport_data', 'sticker'], messageHandler.invalidInputHandler);
+
 bot.launch();
